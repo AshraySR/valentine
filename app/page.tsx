@@ -13,7 +13,7 @@ import { LoveQuiz } from "@/components/love-quiz"
 import confetti from 'canvas-confetti'
 import dynamic from 'next/dynamic'
 import { BackgroundHearts } from "@/components/background-hearts"
-import { HeartMaze } from '@/components/heart-maze';
+//import { HeartMaze } from '@/components/heart-maze';
 
 const HeartMaze = dynamic(() => import('@/components/heart-maze').then(mod => ({ default: mod.HeartMaze })), {
   ssr: false
@@ -63,6 +63,7 @@ export default function ValentinePage() {
 
   const handleNext = () => {
     setCurrentSection(prev => Math.min(prev + 1, sections.length - 1))
+    console.log(currentSection)
   }
 
   const handlePrevious = () => {
@@ -80,7 +81,11 @@ export default function ValentinePage() {
   const handleCandleBlown = () => {
     setCandlesBlown(prev => prev + 1)
   }
-  
+
+  const handleNextFour = () => {
+    setCurrentSection(5)
+  }
+
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-pink-100 to-red-100 dark:from-red-950 dark:to-pink-950 transition-colors duration-300">
@@ -156,7 +161,7 @@ export default function ValentinePage() {
           {currentSection === 1 && (
             <section className="h-screen flex flex-col items-center justify-center p-4 space-y-8">
               <h2 className="text-3xl md:text-4xl font-bold text-red-600 dark:text-red-400 text-center">
-                Let's play a game, shall we?
+                Let&apos;s play a game, shall we?
               </h2>
               <LoveQuiz />
               <div className="space-x-4">
@@ -241,10 +246,10 @@ export default function ValentinePage() {
               <h2 className="text-3xl md:text-4xl font-bold text-red-600 dark:text-red-400 text-center">
                 Follow Your Heart
               </h2>
-              <HeartMaze onComplete={handleNext} />
+              <HeartMaze onComplete={handleNextFour} />
               <div className="space-x-4">
                 <Button onClick={handlePrevious}>Previous</Button>
-                <Button onClick={handleNext}>Next</Button>
+                <Button onClick={handleNextFour}>Next</Button>
               </div>
             </section>
           )}
@@ -259,7 +264,7 @@ export default function ValentinePage() {
                 >
                   <div className="space-y-4">
                     <h2 className="text-2xl md:text-3xl font-bold text-red-600 dark:text-red-400">
-                      Time Until Valentine's Day
+                      Time Until Valentine&apos;s Day
                     </h2>
                     <CountdownTimer />
                   </div>
@@ -296,7 +301,7 @@ export default function ValentinePage() {
                     Yay! 🎉💕
                   </h2>
                   <p className="text-xl md:text-2xl text-gray-700 dark:text-gray-300">
-                    You've made me the happiest person in the world!
+                    You&apos;ve made me the happiest person in the world!
                   </p>
                   <div className="flex justify-center">
                     <Sparkles className="w-32 h-32 text-red-500 dark:text-red-400 animate-bounce" />
