@@ -1,101 +1,335 @@
-import Image from "next/image";
+'use client'
 
-export default function Home() {
+import { useState } from "react"
+import { motion, AnimatePresence } from "framer-motion"
+import { Heart, Sparkles } from 'lucide-react'
+import { Button } from "@/components/ui/button"
+import { ThemeToggle } from "@/components/theme-toggle"
+import { MemoryCard } from "@/components/memory-card"
+import { Candle } from "@/components/candle"
+import { CursorHearts } from "@/components/cursor-hearts"
+import { CountdownTimer } from "@/components/countdown-timer"
+import { LoveQuiz } from "@/components/love-quiz"
+import confetti from 'canvas-confetti'
+import dynamic from 'next/dynamic'
+import { BackgroundHearts } from "@/components/background-hearts"
+import { HeartMaze } from '@/components/heart-maze';
+
+const HeartMaze = dynamic(() => import('@/components/heart-maze').then(mod => ({ default: mod.HeartMaze })), {
+  ssr: false
+})
+
+// Sample messages for the memory cards
+const memories = [
+  {
+    image: "/1.jpg?height=400&width=400",
+    message: "Remember our first date? Your smile lit up the whole room ❤️"
+  },
+  {
+    image: "/2.jpg?height=400&width=400",
+    message: "That time we got lost but found the best adventure together 🌟"
+  },
+  {
+    image: "/3.jpg?height=400&width=400",
+    message: "Dancing in the rain, not caring about anything else 💃"
+  },
+  {
+    image: "/4.jpg?height=400&width=400",
+    message: "Our first road trip - singing at the top of our lungs 🎵"
+  },
+  {
+    image: "/5.jpg?height=400&width=400",
+    message: "That sunset picnic where time stood still ✨"
+  },
+  {
+    image: "/6.jpg?height=400&width=400",
+    message: "Making silly faces and laughing until our sides hurt 😊"
+  }
+]
+
+export default function ValentinePage() {
+  const [currentSection, setCurrentSection] = useState(0)
+  const [showCelebration, setShowCelebration] = useState(false)
+  const [candlesBlown, setCandlesBlown] = useState(0)
+
+  const sections = [
+    { id: 'welcome', title: "Welcome" },
+    { id: 'quiz', title: "Love Quiz" },
+    { id: 'memories', title: "Our Memories" },
+    { id: 'candles', title: "Make a Wish" },
+    { id: 'maze', title: "Heart's Journey" },
+    { id: 'proposal', title: "The Question" }
+  ]
+
+  const handleNext = () => {
+    setCurrentSection(prev => Math.min(prev + 1, sections.length - 1))
+  }
+
+  const handlePrevious = () => {
+    setCurrentSection(prev => Math.max(prev - 1, 0))
+  }
+
+  const triggerConfetti = () => {
+    confetti({
+      particleCount: 100,
+      spread: 70,
+      origin: { y: 0.6 }
+    })
+  }
+
+  const handleCandleBlown = () => {
+    setCandlesBlown(prev => prev + 1)
+  }
+  
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <main className="min-h-screen bg-gradient-to-b from-pink-100 to-red-100 dark:from-red-950 dark:to-pink-950 transition-colors duration-300">
+      <CursorHearts />
+      <ThemeToggle />
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={currentSection}
+          initial={{ opacity: 0, x: 100 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: -100 }}
+          transition={{ duration: 0.5 }}
+          className="min-h-screen"
         >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
+          {currentSection === 0 && (
+            <section className="relative h-screen flex flex-col items-center justify-center text-center p-4">
+              <BackgroundHearts />
+              <motion.div
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ type: "spring", duration: 1 }}
+                className="space-y-8 relative z-10"
+              >
+                <motion.div
+                  animate={{ 
+                    scale: [1, 1.1, 1],
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                >
+                  <Heart className="w-24 h-24 text-red-500 dark:text-red-400 mx-auto" />
+                </motion.div>
+                
+                <div className="space-y-4">
+                  <motion.h1 
+                    className="text-5xl md:text-7xl font-bold text-red-600 dark:text-red-400"
+                    initial={{ y: 20, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ delay: 0.5 }}
+                  >
+                    A Special Question
+                  </motion.h1>
+                  <motion.p 
+                    className="text-xl md:text-2xl text-gray-700 dark:text-gray-300"
+                    initial={{ y: 20, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ delay: 0.8 }}
+                  >
+                    for someone extraordinary
+                  </motion.p>
+                </div>
+
+                <motion.div
+                  initial={{ y: 20, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ delay: 1.2 }}
+                >
+                  <Button
+                    onClick={handleNext}
+                    className="bg-red-500 hover:bg-red-600 text-white text-xl px-8 py-6 shadow-lg hover:shadow-xl transition-all duration-300"
+                  >
+                    Begin the Journey ❤️
+                  </Button>
+                </motion.div>
+              </motion.div>
+            </section>
+          )}
+
+          {currentSection === 1 && (
+            <section className="h-screen flex flex-col items-center justify-center p-4 space-y-8">
+              <h2 className="text-3xl md:text-4xl font-bold text-red-600 dark:text-red-400 text-center">
+                Let's play a game, shall we?
+              </h2>
+              <LoveQuiz />
+              <div className="space-x-4">
+                <Button onClick={handlePrevious}>Previous</Button>
+                <Button onClick={handleNext}>Next</Button>
+              </div>
+            </section>
+          )}
+
+{currentSection === 2 && (
+  <section className="min-h-screen p-4 py-20">
+    <div className="max-w-6xl mx-auto space-y-8">
+      <h2 className="text-3xl md:text-4xl font-bold text-red-600 dark:text-red-400 text-center">
+        Our Beautiful Memories Together
+      </h2>
+      <p className="text-center text-gray-600 dark:text-gray-300">
+        Click on each photo to reveal a special message ❤️
+      </p>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {memories.map((memory, index) => (
+          <MemoryCard
+            key={index}
+            imageUrl={memory.image}
+            hiddenMessage={memory.message}
+            index={index}
           />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+        ))}
+      </div>
+      <div className="text-center space-x-4">
+        <Button onClick={handlePrevious}>Previous</Button>
+        <Button onClick={handleNext}>Next</Button>
+      </div>
     </div>
-  );
+  </section>
+)}
+
+          {currentSection === 3 && (
+            <section className="h-screen flex flex-col items-center justify-center p-4 space-y-8">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="text-center space-y-8"
+              >
+                <h2 className="text-3xl md:text-4xl font-bold text-red-600 dark:text-red-400 text-center">
+                  Make a Wish
+                </h2>
+                <p className="text-xl text-gray-700 dark:text-gray-300">
+                  Blow out the candles and make a wish...
+                </p>
+                <div className="flex justify-center items-end gap-4 mb-8">
+                  <Candle onBlown={handleCandleBlown} />
+                  <Candle onBlown={handleCandleBlown} />
+                  <Candle onBlown={handleCandleBlown} />
+                </div>
+                {candlesBlown > 0 && (
+                  <motion.p
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    className="text-lg text-gray-600 dark:text-gray-400"
+                  >
+                    {candlesBlown === 3 
+                      ? "All candles blown! Your wish will come true... ✨"
+                      : `${3 - candlesBlown} candles remaining...`}
+                  </motion.p>
+                )}
+                <div className="space-x-4">
+                  <Button onClick={handlePrevious}>Previous</Button>
+                  <Button 
+                    onClick={handleNext} 
+                    disabled={candlesBlown < 3}
+                    className="bg-red-500 hover:bg-red-600 text-white"
+                  >
+                    {candlesBlown === 3 ? "Continue Journey" : `${3 - candlesBlown} candles remaining`}
+                  </Button>
+                </div>
+              </motion.div>
+            </section>
+          )}
+
+          {currentSection === 4 && (
+            <section className="h-screen flex flex-col items-center justify-center p-4 space-y-8">
+              <h2 className="text-3xl md:text-4xl font-bold text-red-600 dark:text-red-400 text-center">
+                Follow Your Heart
+              </h2>
+              <HeartMaze onComplete={handleNext} />
+              <div className="space-x-4">
+                <Button onClick={handlePrevious}>Previous</Button>
+                <Button onClick={handleNext}>Next</Button>
+              </div>
+            </section>
+          )}
+
+          {currentSection === 5 && (
+            <section className="h-screen flex flex-col items-center justify-center p-4 space-y-12">
+              {!showCelebration ? (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="text-center space-y-12"
+                >
+                  <div className="space-y-4">
+                    <h2 className="text-2xl md:text-3xl font-bold text-red-600 dark:text-red-400">
+                      Time Until Valentine's Day
+                    </h2>
+                    <CountdownTimer />
+                  </div>
+                  <div className="space-y-8">
+                    <h2 className="text-4xl md:text-6xl font-bold text-red-600 dark:text-red-400">
+                      Will You Be My Valentine?
+                    </h2>
+                    <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                      <Button
+                        onClick={() => {
+                          setShowCelebration(true)
+                          triggerConfetti()
+                        }}
+                        className="bg-red-500 hover:bg-red-600 text-white text-xl px-8 py-6"
+                      >
+                        Yes! 💝
+                      </Button>
+                      <motion.button
+                        whileHover={{ x: [0, -100, 100, -100, 100, 0] }}
+                        className="text-xl px-8 py-6 bg-gray-200 dark:bg-gray-800 rounded-md"
+                      >
+                        Let me think.
+                      </motion.button>
+                    </div>
+                  </div>
+                </motion.div>
+              ) : (
+                <motion.div
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  className="text-center space-y-8"
+                >
+                  <h2 className="text-4xl md:text-6xl font-bold text-red-600 dark:text-red-400">
+                    Yay! 🎉💕
+                  </h2>
+                  <p className="text-xl md:text-2xl text-gray-700 dark:text-gray-300">
+                    You've made me the happiest person in the world!
+                  </p>
+                  <div className="flex justify-center">
+                    <Sparkles className="w-32 h-32 text-red-500 dark:text-red-400 animate-bounce" />
+                  </div>
+                  {Array.from({ length: 10 }).map((_, i) => (
+                    <motion.div
+                      key={i}
+                      className="fixed text-6xl"
+                      initial={{ 
+                        top: "100vh",
+                        left: `${Math.random() * 100}vw`,
+                        rotate: 0
+                      }}
+                      animate={{ 
+                        top: "-20vh",
+                        rotate: 360
+                      }}
+                      transition={{
+                        duration: Math.random() * 5 + 5,
+                        repeat: Infinity,
+                        ease: "linear"
+                      }}
+                    >
+                      🎈
+                    </motion.div>
+                  ))}
+                </motion.div>
+              )}
+            </section>
+          )}
+        </motion.div>
+      </AnimatePresence>
+    </main>
+  )
 }
+
