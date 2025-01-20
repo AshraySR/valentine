@@ -1,11 +1,12 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import confetti from 'canvas-confetti'
 
+// Define the maze layout (0: path, 1: wall, 2: start, 3: end)
 const mazeLayout = [
   [2, 0, 0, 1, 0, 0, 1, 1, 1, 1],
   [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
@@ -26,14 +27,16 @@ interface HeartMazeProps {
   onComplete: () => void
 }
 
-export function HeartMaze({ onComplete}: HeartMazeProps) {
-  const [playerPos, setPlayerPos] = useState<Position>({ x: 0, y: 0 })
+export function HeartMaze({ onComplete }: HeartMazeProps) {
+  const [playerPos, setPlayerPos] = useState<Position>({ x: 0, y: 0 }) // Start position at top-left
   const [showSuccess, setShowSuccess] = useState(false)
+  const [mazeCompleted, setMazeCompleted] = useState(false)
 
-  const handleMove = useCallback((dx: number, dy: number) => {
+  const handleMove = (dx: number, dy: number) => {
     const newX = playerPos.x + dx
     const newY = playerPos.y + dy
 
+    // Check if the move is valid
     if (
       newX >= 0 &&
       newX < mazeLayout[0].length &&
@@ -43,17 +46,18 @@ export function HeartMaze({ onComplete}: HeartMazeProps) {
     ) {
       setPlayerPos({ x: newX, y: newY })
 
-      if (mazeLayout[newY][newX] === 3 && !showSuccess) {
+      // Check if reached the end
+      if (mazeLayout[newY][newX] === 3) {
         setShowSuccess(true)
+        setMazeCompleted(true)
         confetti({
           particleCount: 100,
           spread: 70,
           origin: { y: 0.6 }
         })
-        onComplete()
       }
     }
-  }, [playerPos, onComplete, showSuccess])
+  }
 
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
@@ -75,7 +79,7 @@ export function HeartMaze({ onComplete}: HeartMazeProps) {
 
     window.addEventListener('keydown', handleKeyPress)
     return () => window.removeEventListener('keydown', handleKeyPress)
-  }, [handleMove])
+  }, [playerPos])
 
   return (
     <Card className="p-6 relative">
@@ -123,7 +127,7 @@ export function HeartMaze({ onComplete}: HeartMazeProps) {
             >
               <div className="text-white text-center p-4">
                 <h4 className="text-2xl font-bold mb-2">You made it! 💖</h4>
-                <p>Moving to the next section...</p>
+                <p>Love always finds its way...</p>
               </div>
             </motion.div>
           )}
@@ -168,7 +172,18 @@ export function HeartMaze({ onComplete}: HeartMazeProps) {
           </Button>
           <div />
         </div>
+
+        {mazeCompleted && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-center mt-6"
+          >
+            
+          </motion.div>
+        )}
       </div>
     </Card>
   )
 }
+

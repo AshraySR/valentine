@@ -33,10 +33,11 @@ export function MemoryCard({ imageUrl, hiddenMessage, index, onClick }: MemoryCa
       >
         <div className="relative w-full h-full">
           <div className="relative w-full h-full">
-            <img
-              src={imageUrl}
+            <Image
+              src={imageUrl || "/placeholder.svg"}
               alt={`Memory ${index + 1}`}
-              className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+              fill
+              className="object-cover transition-transform duration-300 hover:scale-105"
             />
           </div>
           <AnimatePresence>
@@ -66,3 +67,4 @@ export function MemoryCard({ imageUrl, hiddenMessage, index, onClick }: MemoryCa
     </motion.div>
   )
 }
+
