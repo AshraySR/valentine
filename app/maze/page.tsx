@@ -19,7 +19,7 @@ export default function MazePage() {
       <ThemeToggle />
 
       <section className="h-screen flex flex-col items-center justify-center p-4 space-y-8">
-        <h2 className="text-3xl md:text-4xl font-bold text-red-600 dark:text-red-400 text-center">Follow Your Heart</h2>
+        <h2 className="text-3xl md:text-4xl font-bold text-red-600 dark:text-red-400 text-center">Help Me Find Your Heart</h2>
         <HeartMaze onComplete={() => router.push("/proposal")} />
         <div className="space-x-4">
           <Button onClick={() => router.push("/candles")}>Previous</Button>

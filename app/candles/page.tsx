@@ -23,8 +23,8 @@ export default function CandlesPage() {
 
       <section className="h-screen flex flex-col items-center justify-center p-4 space-y-8">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center space-y-8">
-          <h2 className="text-3xl md:text-4xl font-bold text-red-600 dark:text-red-400 text-center">Make a Wish</h2>
-          <p className="text-xl text-gray-700 dark:text-gray-300">Blow out the candles and make a wish...</p>
+          <h2 className="text-3xl md:text-4xl font-bold text-red-600 dark:text-red-400 text-center">Please make my wish come true</h2>
+          <p className="text-xl text-gray-700 dark:text-gray-300">Click and Blow Out The Candles</p>
           <div className="flex justify-center items-end gap-4 mb-8">
             <Candle onBlown={handleCandleBlown} />
             <Candle onBlown={handleCandleBlown} />
@@ -37,7 +37,7 @@ export default function CandlesPage() {
               className="text-lg text-gray-600 dark:text-gray-400"
             >
               {candlesBlown === 3
-                ? "All candles blown! Your wish will come true... ✨"
+                ? "All candles blown! My wish will come true... ✨"
                 : `${3 - candlesBlown} candles remaining...`}
             </motion.p>
           )}

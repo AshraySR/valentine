@@ -8,33 +8,33 @@ import confetti from 'canvas-confetti'
 
 const questions = [
   {
-    question: "Where did we first meet?",
-    options: ["At a café", "Through friends", "At work", "Online"],
+    question: "Where did I first kiss you?",
+    options: ["At Dominos", "At McD", "Was it Zaitoon?", "House of Pools, maybe?"],
     correctAnswer: 1
   },
   {
-    question: "What's my favorite food?",
-    options: ["Pizza", "Sushi", "Pasta", "Tacos"],
+    question: "Which one is not your nickname?",
+    options: ["Naplu", "Egglu", "Chicken", "Mishti"],
     correctAnswer: 2
   },
   {
-    question: "What makes me smile the most?",
-    options: ["Your jokes", "Surprise gifts", "Morning texts", "Random hugs"],
+    question: "Which book were the lines from when I first said I love you?",
+    options: ["Persuasion", "The Fault in our Stars", "The Notebook", "Pride and Prejudice"],
     correctAnswer: 3
   },
   {
     question: "Our first movie together was...",
-    options: ["A romantic comedy", "A horror movie", "An action film", "An animation"],
+    options: ["Deadpool and Wolverine", "Spiderman", "The Hulk", "Doctor Strange"],
     correctAnswer: 0
   },
   {
-    question: "What's my dream vacation spot?",
-    options: ["Paris", "Maldives", "New York", "Tokyo"],
+    question: "What did you save my contact as when we were not dating?",
+    options: ["Ashrayy", "Therapist", "Chair", "Ashray VIT"],
     correctAnswer: 1
   },
   {
     question: "What's my favorite way to spend weekends?",
-    options: ["Netflix and chill", "Going on adventures", "Cooking together", "Game nights"],
+    options: ["Netflix and chill", "Going on adventures", "Staying in your arms", "Game nights"],
     correctAnswer: 2
   }
 ]
@@ -104,8 +104,8 @@ export function LoveQuiz() {
               </h3>
               <p className="text-muted-foreground">
                 {score === questions.length
-                  ? "Perfect! You know me so well! ❤️"
-                  : "Not bad! We should spend more time together! 😊"}
+                  ? "Perfect! Just like you are! ❤️"
+                  : "I knew I love you more! 😊"}
               </p>
             </motion.div>
           )}

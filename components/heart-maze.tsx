@@ -87,7 +87,7 @@ export function HeartMaze({ onComplete }: HeartMazeProps) {
       <div className="space-y-4">
         <div className="text-center mb-6">
           <h3 className="text-2xl font-bold text-red-600 dark:text-red-400">
-            Guide Your Heart Home
+            Guide Me Home!
           </h3>
           <p className="text-muted-foreground">
             Use arrow keys or buttons to navigate to the heart

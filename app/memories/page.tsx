@@ -9,27 +9,27 @@ import { useRouter } from "next/navigation"
 const memories = [
   {
     image: "/1.jpg?height=400&width=400",
-    message: "Remember our first date? Your smile lit up the whole room ❤️",
+    message: "Oh, the way you light up the world, especially mine!",
   },
   {
     image: "/2.jpg?height=400&width=400",
-    message: "That time we got lost but found the best adventure together 🌟",
+    message: "The day I knew, this is the hand I want to hold my entire life.",
   },
   {
     image: "/3.jpg?height=400&width=400",
-    message: "Dancing in the rain, not caring about anything else 💃",
+    message: "Forever your KuchuPuchu, no matter what.",
   },
   {
     image: "/4.jpg?height=400&width=400",
-    message: "Our first road trip - singing at the top of our lungs 🎵",
+    message: "Will ask for your hand in all my lives.",
   },
   {
     image: "/5.jpg?height=400&width=400",
-    message: "That sunset picnic where time stood still ✨",
+    message: "An ocean of my love just for you.",
   },
   {
     image: "/6.jpg?height=400&width=400",
-    message: "Making silly faces and laughing until our sides hurt 😊",
+    message: "That sunset pic where time stood still",
   },
 ]
 
