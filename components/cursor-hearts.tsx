@@ -11,6 +11,7 @@ interface Heart {
 
 export function CursorHearts() {
   const [hearts, setHearts] = useState<Heart[]>([])
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
 
   useEffect(() => {

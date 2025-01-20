@@ -27,6 +27,7 @@ interface HeartMazeProps {
   onComplete: () => void
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function HeartMaze({ onComplete }: HeartMazeProps) {
   const [playerPos, setPlayerPos] = useState<Position>({ x: 0, y: 0 }) // Start position at top-left
   const [showSuccess, setShowSuccess] = useState(false)

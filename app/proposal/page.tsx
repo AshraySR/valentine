@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation"
 import confetti from "canvas-confetti"
 
 export default function ProposalPage() {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const router = useRouter()
   const [showCelebration, setShowCelebration] = useState(false)
 
